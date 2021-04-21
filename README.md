@@ -50,7 +50,7 @@ $ python3 heatmap_generator.py -r ../csv_examples/heatmap_test.csv
 This command reads the raw input data file and generates a heatmap. An example is showcased in the figure below. 
 
 <p align="center">
-  <img src="https://github.com/Ocram95/BCCSIMARGLToolkit/charts_example/heatmap.png" />
+  <img src="https://github.com/Ocram95/BCCSIMARGLToolkit/blob/main/charts_examples/heatmap.png" />
 </p>
 
 ```
@@ -59,7 +59,7 @@ $ python3 process_data_bins_diff_zero.py -r ../csv_examples/number_of_bins_diff_
 This command reads the raw input data and generates an "example.csv" file where each line represents a window of 30 seconds. For each window, the number of bins different from zero is specified. Data can be plotted to obtain useful charts. An example is showcased below.
 
 <p align="center">
-  <img src="https://github.com/Ocram95/BCCSIMARGLToolkit/charts_example/diff_zero.png" />
+  <img src="https://github.com/Ocram95/BCCSIMARGLToolkit/blob/main/charts_examples/diff_zero.png" />
 </p>
 
 ```
@@ -69,7 +69,7 @@ $ python3 process_data_bins_changed.py -r ../csv_examples/number_of_bins_changed
 This command reads the raw input data and generate am "example.csv" file. For each line, the number of bins changed between two consecutive/adjacent sampling interval is specified. Data can be plotted to obtain useful charts. An example is showcased below.
 
 <p align="center">
-  <img src="https://github.com/Ocram95/BCCSIMARGLToolkit/charts_example/changed_bins.png" />
+  <img src="https://github.com/Ocram95/BCCSIMARGLToolkit/blob/main/charts_examples/changed_bins.png" />
 </p>
 
 The .csv files are generated with BCCSTEGO [1]. The traffic was generated using IPv6 network covert channels via IPv6CC tool [2].
@@ -77,10 +77,10 @@ The .csv files are generated with BCCSTEGO [1]. The traffic was generated using 
 # Further Reading
 ## Useful Tools
 
-[1] BCCSTEGO: https://github.com/mattereppe/bccstego
+[1] BCCSTEGO: https://github.com/mattereppe/bccstego 
 [2] IPv6CC: https://github.com/Ocram95/IPv6CC_SoftwareX
 
-## Papers on Stegomalware
+## Papers 
 
 # Acknowledgement 
 
