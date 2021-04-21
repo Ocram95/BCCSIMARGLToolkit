@@ -68,6 +68,5 @@ def process_command_line(argv):
 #MAIN
 settings, args = process_command_line(sys.argv)
 processed_data = read_and_process(settings.csv)
-
 save_final_data(processed_data, settings.output_file)
-#tmp_plot(processed_data)
+tmp_plot(processed_data)

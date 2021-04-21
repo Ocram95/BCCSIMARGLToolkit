@@ -104,13 +104,13 @@ def tmp_plot(pre_processed_data, counters):
 	fig, ax = plt.subplots()
 	ax.plot(pre_processed_data["time"].values, counters, label='your label')
 	ax.set_ylim(ymin=0)
-	ax.set_xlim(xmin=0, right=1000000)
+	ax.set_xlim(xmin=0, right=500000)
 	ax.set_ylabel('no. of bins != 0')
 	ax.set_xlabel('time [s]')
 	ax.legend()
 	plt.grid()
 	plt.show()
-	#plt.savefig('/Users/marco/Desktop/b=16_l=65k_T=30.pdf')
+	#plt.savefig('your_path')
 
 def process_command_line(argv):
 	parser = optparse.OptionParser()
