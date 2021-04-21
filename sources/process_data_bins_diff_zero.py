@@ -104,9 +104,12 @@ def tmp_plot(pre_processed_data, counters):
 	fig, ax = plt.subplots()
 	ax.plot(pre_processed_data["time"].values, counters, label='your label')
 	ax.set_ylim(ymin=0)
-	ax.set_xlim(xmin=0, right=500000)
+	ax.set_xlim(xmin=0, right=600000)
 	ax.set_ylabel('no. of bins != 0')
 	ax.set_xlabel('time [s]')
+	# x = [0, 60000, 120000, 180000, 240000, 300000, 360000, 420000, 480000, 540000, 600000]
+	# my_xticks = ['0', '60', '120', '180', '240', '300', '360', '420', '480', '540', '600']
+	# plt.xticks(x, my_xticks)
 	ax.legend()
 	plt.grid()
 	plt.show()
