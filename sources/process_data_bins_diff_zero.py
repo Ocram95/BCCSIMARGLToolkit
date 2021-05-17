@@ -17,20 +17,20 @@ def read_data(data):
 
 def time_window_suddivision(pre_processed_data, period):
 	time_suddivision = [0] * math.ceil(len(pre_processed_data))
-	#pre alloco spazio di zeri grande quanto pre_processed_data
+	#pre allocation of len(pre_processed_data) zeros 
 	count = 1
-	#colonna originale dei tempi
+	#origina time column
 	times = pre_processed_data['time']
 	for x in times:
-		#controllo se il tempo del campione x-esimo rientra nel mio periodo (p=15s) considerato
+		#if the time of x is in my period (p=15)
 		if x <= count*period*1000:
-			#se si vuol dire che, e.g., tra 0 e 15 devo incrementare ho visto un campione in piu
+			#if yes, it means that, e.g., in this period I have one more sample
 			time_suddivision[count-1] += 1
 		else:
-			#altrimenti il mio campione è nel periodo successivo
+			#otherwise it is in the following period
 			time_suddivision[count] += 1
 			count += 1
-	#boh
+	
 	time_suddivision = [i for i in time_suddivision if i != 0]
 
 	no_time_numpy = []
