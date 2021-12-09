@@ -1,9 +1,9 @@
 # BCCSIMARGLToolkit
 
-BCCSIMARGLToolkit can be used to process data collected by BCCSTEGO [1] tool. Processed data can be used to spot the presence of network covert channels.
+BCCSIMARGLToolkit can be used to process data collected by [eBPF-Framework](https://github.com/Ocram95/eBPF-Framework) tool. Processed data can be used to spot the presence of network covert channels.
 It consists of three different Python3 scripts, within "/sources" directory. 
 Each script process data in a different manner:
-- ```heatmap_generator.py```: it creates heatmaps according to the evolution of the bins filled by BCCSTEGO tool. 
+- ```heatmap_generator.py```: it creates heatmaps according to the evolution of the bins filled by [eBPF-Framework](https://github.com/Ocram95/eBPF-Framework) tool. 
 - ```process_data_bins_changed.py```: it processes data to obtain the number of bins changed between subsequent/adjacent bins.
 - ```process_data_bins_diff_zero.py```: it processes data to obtain the number of bins different from zero, i.e., filled with at least one value. It is possible to define a window to split the data in terms of number of samples or a time period.
 
@@ -74,15 +74,12 @@ This command reads the raw input data and generate am "example.csv" file. For ea
 
 The .csv files are generated with BCCSTEGO [1]. The traffic was generated using IPv6 network covert channels via IPv6CC tool [2].
 
-# Further Reading
-## Useful Tools
+## Tools
 
-[1] BCCSTEGO: https://github.com/mattereppe/bccstego<br/>
+[1] eBPF-Framework: https://github.com/Ocram95/eBPF-Framework
 [2] IPv6CC: https://github.com/Ocram95/IPv6CC_SoftwareX
 
-## Papers 
 
 # Acknowledgement 
 
-This work has been supported by EU Project [SIMARGL](https://simargl.eu) - Secure Intelligent Methods for Advanced Recognition of Malware and Stegomalware, Grant Agreement No 833042 and 
-[ASTRID](https://www.astrid-project.eu) - AddreSsing ThReats for virtualIseD services, Grant Agreement No. 786922.
+This work has been supported by EU Project [SIMARGL](https://simargl.eu) - Secure Intelligent Methods for Advanced Recognition of Malware and Stegomalware, Grant Agreement No 833042 and [ASTRID](https://www.astrid-project.eu) - AddreSsing ThReats for virtualIseD services, Grant Agreement No. 786922.
