@@ -1,9 +1,9 @@
 # BCCSIMARGLToolkit
 
-BCCSIMARGLToolkit can be used to process data collected by [eBPF-Framework](https://github.com/Ocram95/eBPF-Framework) tool. Processed data can be used to spot the presence of network covert channels.
+BCCSIMARGLToolkit can be used to process data collected by [eBPF-Framework](https://github.com/Ocram95/eBPF-Framework)[1] tool. Processed data can be used to spot the presence of network covert channels.
 It consists of three different Python3 scripts, within "/sources" directory. 
 Each script process data in a different manner:
-- ```heatmap_generator.py```: it creates heatmaps according to the evolution of the bins filled by [eBPF-Framework](https://github.com/Ocram95/eBPF-Framework) tool. 
+- ```heatmap_generator.py```: it creates heatmaps according to the evolution of the bins filled by [eBPF-Framework](https://github.com/Ocram95/eBPF-Framework)[1] tool. 
 - ```process_data_bins_changed.py```: it processes data to obtain the number of bins changed between subsequent/adjacent bins.
 - ```process_data_bins_diff_zero.py```: it processes data to obtain the number of bins different from zero, i.e., filled with at least one value. It is possible to define a window to split the data in terms of number of samples or a time period.
 
@@ -72,7 +72,7 @@ This command reads the raw input data and generate am "example.csv" file. For ea
   <img src="https://github.com/Ocram95/BCCSIMARGLToolkit/blob/main/charts_examples/changed_bins.png" width="500" />
 </p>
 
-The .csv files are generated with BCCSTEGO [1]. The traffic was generated using IPv6 network covert channels via IPv6CC tool [2].
+The .csv files are generated with the [eBPF-Framework](https://github.com/Ocram95/eBPF-Framework)[1]. The traffic was generated using IPv6 network covert channels via [IPv6CC](https://github.com/Ocram95/IPv6CC_SoftwareX)[2].
 
 ## Tools
 
