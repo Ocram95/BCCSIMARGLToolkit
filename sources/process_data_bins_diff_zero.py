@@ -10,7 +10,7 @@ import optparse
 def read_data(data):
 	read_data = pd.read_csv(data, header=None)
 	first_time_seen = read_data.iloc[1,0]
-	time_column = (read_data.iloc[:,0] - first_time_seen) / 1000000
+	time_column = (read_data.iloc[:,0] - first_time_seen)# / 1000000
 	pre_processed_data = read_data.drop(read_data.columns[0], axis=1)
 	pre_processed_data.insert(0, "time", time_column, True)
 	return pre_processed_data
@@ -23,7 +23,7 @@ def time_window_suddivision(pre_processed_data, period):
 	times = pre_processed_data['time']
 	for x in times:
 		#if the time of x is in my period (p=15)
-		if x <= count*period*1000:
+		if x <= count * period: #*1000:
 			#if yes, it means that, e.g., in this period I have one more sample
 			time_suddivision[count-1] += 1
 		else:
@@ -104,50 +104,18 @@ def tmp_plot(pre_processed_data, counters):
 	fig, ax = plt.subplots()
 	ax.plot(pre_processed_data["time"].values, counters, label='your label')
 	ax.set_ylim(ymin=0)
-	ax.set_xlim(xmin=0, right=600000)
 	ax.set_ylabel('no. of bins != 0')
 	ax.set_xlabel('time [s]')
-	# x = [0, 60000, 120000, 180000, 240000, 300000, 360000, 420000, 480000, 540000, 600000]
-	# my_xticks = ['0', '60', '120', '180', '240', '300', '360', '420', '480', '540', '600']
-	# plt.xticks(x, my_xticks)
 	ax.legend()
 	plt.grid()
 	plt.show()
-	#plt.savefig('your_path')
 
 def process_command_line(argv):
 	parser = optparse.OptionParser()
-	parser.add_option(
-		'-r',
-		'--csv',
-		help='Specify the eBPF csv to read.',
-		action='store',
-		type='string',
-		dest='csv')
-
-	parser.add_option(
-		'-t',
-		'--time_window',
-		help='Specify the size of the time window to split the data.',
-		action='store',
-		type='int',
-		dest='time_window')
-
-	parser.add_option(
-		'-s',
-		'--sample_window',
-		help='Specify the size of the sample window to split the data.',
-		action='store',
-		type='int',
-		dest='sample_window')
-
-	parser.add_option(
-		'-w',
-		'--output_file',
-		help='Specify the path of the output file.',
-		action='store',
-		type='string',
-		dest='output_file')
+	parser.add_option('-r', '--csv', help='Specify the eBPF csv to read.', action='store', type='string', dest='csv')
+	parser.add_option('-t', '--time_window', help='Specify the size of the time window to split the data.', action='store', type='int', dest='time_window')
+	parser.add_option('-s', '--sample_window', help='Specify the size of the sample window to split the data.', action='store', type='int', dest='sample_window')
+	parser.add_option('-w', '--output_file', help='Specify the path of the output file.', action='store', type='string', dest='output_file')
 
 	settings, args = parser.parse_args(argv)
 		
@@ -169,7 +137,7 @@ pre_processed_data = read_data(settings.csv)
 if settings.time_window:
 	counters = time_window_suddivision(pre_processed_data, settings.time_window)
 elif settings.sample_window:
-	counters = sample_window_suddivision(pre_processed_data, settings.sample_window)
+ 	counters = sample_window_suddivision(pre_processed_data, settings.sample_window)
 save_final_data(counters, pre_processed_data, settings.output_file)
-tmp_plot(pre_processed_data, counters)
+#tmp_plot(pre_processed_data, counters)
 

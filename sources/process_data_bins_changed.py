@@ -39,21 +39,9 @@ def save_final_data(data, output_file_path):
 
 def process_command_line(argv):
 	parser = optparse.OptionParser()
-	parser.add_option(
-		'-r',
-		'--csv',
-		help='Specify the eBPF csv to read.',
-		action='store',
-		type='string',
-		dest='csv')
+	parser.add_option('-r', '--csv', help='Specify the eBPF csv to read.', action='store', type='string', dest='csv')
 
-	parser.add_option(
-		'-w',
-		'--output_file',
-		help='Specify the path of the output file.',
-		action='store',
-		type='string',
-		dest='output_file')
+	parser.add_option('-w', '--output_file', help='Specify the path of the output file.', action='store', type='string', dest='output_file')
 
 	settings, args = parser.parse_args(argv)
 		
@@ -69,4 +57,4 @@ def process_command_line(argv):
 settings, args = process_command_line(sys.argv)
 processed_data = read_and_process(settings.csv)
 save_final_data(processed_data, settings.output_file)
-tmp_plot(processed_data)
+#tmp_plot(processed_data)
