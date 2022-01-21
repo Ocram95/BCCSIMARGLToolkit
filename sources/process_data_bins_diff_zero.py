@@ -6,11 +6,14 @@ from matplotlib.font_manager import FontProperties
 import csv
 import sys
 import optparse
+import json
+from datetime import datetime
+
 
 def read_data(data):
 	read_data = pd.read_csv(data, header=None)
 	first_time_seen = read_data.iloc[1,0]
-	time_column = (read_data.iloc[:,0] - first_time_seen)# / 1000000
+	time_column = (read_data.iloc[:,0] - first_time_seen).round(2)# / 1000000
 	pre_processed_data = read_data.drop(read_data.columns[0], axis=1)
 	pre_processed_data.insert(0, "time", time_column, True)
 	return pre_processed_data
@@ -91,12 +94,34 @@ def sample_window_suddivision(pre_processed_data, number_of_samples):
 
 	return counters
 
-def save_final_data(counters, pre_processed_data, output_file_path):
+def save_csv(counters, pre_processed_data, output_file_path):
 	with open(output_file_path, mode='w') as file:
 	    writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 	    writer.writerow(['time', 'fl != 0'])
 	    for x in range(len(counters)):
 	        writer.writerow([str(pre_processed_data["time"].values[x]), str(counters[x])])
+
+
+def save_JSON(settings, timestamps, counters):
+
+	test_dict = { "label": "BCCSIMARGL Toolkit analysis",
+		"description:": "File parsed " + settings.csv,
+		"used time_window or sample_window:" : str(settings.time_window) + " " + str(settings.sample_window), 
+		"data": { 
+			"time instant [s]": timestamps,
+			"number of bins != 0": counters
+		},
+		"sources": [ { 
+			"markers": [ { 
+				"tool": "BCCSIMARGL Toolkit",
+				"timestamp": str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
+			} ]
+		 } ]
+	 }
+
+	with open(settings.output_file, 'w') as json_file:
+		json.dump(test_dict, json_file)
+
 
 
 
@@ -138,6 +163,8 @@ if settings.time_window:
 	counters = time_window_suddivision(pre_processed_data, settings.time_window)
 elif settings.sample_window:
  	counters = sample_window_suddivision(pre_processed_data, settings.sample_window)
-save_final_data(counters, pre_processed_data, settings.output_file)
-#tmp_plot(pre_processed_data, counters)
+#skip the first values
+#save_csv(counters[1:], pre_processed_data[1:], settings.output_file)
+save_JSON(settings, pre_processed_data["time"][1:].to_list(), counters[1:])
+#tmp_plot(pre_processed_data[1:], counters[1:])
 
