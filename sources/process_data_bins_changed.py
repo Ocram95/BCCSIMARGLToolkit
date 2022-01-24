@@ -6,10 +6,12 @@ from matplotlib.font_manager import FontProperties
 import csv
 import sys
 import optparse
+import json
+from datetime import datetime
 
 def read_and_process(data):
     read_data = pd.read_csv(data, header=None)
-    time_column = read_data.iloc[:,0]
+    time_column = read_data.iloc[:,0].round(2)
     pre_processed_data = read_data.drop(read_data.columns[0], axis=1)
     data_diff = pre_processed_data.diff()
     data_diff['DIFF'] = data_diff.gt(0).sum(axis=1)
@@ -20,27 +22,41 @@ def read_and_process(data):
 def tmp_plot(data):
 	fig, ax = plt.subplots()
 	ax.plot(data["time"].values, data['DIFF'], label='your label')
-
 	ax.set_ylim(ymin=0)
-	ax.set_xlim(xmin=0, right=900)
+	#ax.set_xlim(xmin=0, right=900)
 	ax.set_ylabel('no. of bins changed')
 	ax.set_xlabel('time [s]')
 	ax.legend()
 	plt.grid()
 	plt.show()
 
-def save_final_data(data, output_file_path):
+def save_CSV(data, output_file_path):
 	with open(output_file_path, mode='w') as file:
 	    writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 	    writer.writerow(['time', 'no. of bins changed'])
 	    for x in range(len(data["time"].values)):
 	        writer.writerow([str(data["time"].values[x]), str(data['DIFF'][x])])
 
+def save_JSON(settings, data):
+
+	test_dict = { "TOOL": "BCCSIMARGL Toolkit",
+		"Analysis": "Number of changed bins",
+		"File parsed": settings.csv,
+		"Analysis Timestamp": str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
+		"Field" : "Flow Label", 
+		"Data": { 
+			"timestamp [s]": data["time"].to_list(),
+			"number of changed bins": data["DIFF"].to_list()
+		}
+	 }
+
+	with open(settings.output_file, 'w') as json_file:
+		json.dump(test_dict, json_file)
+
 
 def process_command_line(argv):
 	parser = optparse.OptionParser()
 	parser.add_option('-r', '--csv', help='Specify the eBPF csv to read.', action='store', type='string', dest='csv')
-
 	parser.add_option('-w', '--output_file', help='Specify the path of the output file.', action='store', type='string', dest='output_file')
 
 	settings, args = parser.parse_args(argv)
@@ -56,5 +72,6 @@ def process_command_line(argv):
 #MAIN
 settings, args = process_command_line(sys.argv)
 processed_data = read_and_process(settings.csv)
-save_final_data(processed_data, settings.output_file)
+#save_CSV(processed_data, settings.output_file)
+save_JSON(settings, processed_data)
 #tmp_plot(processed_data)

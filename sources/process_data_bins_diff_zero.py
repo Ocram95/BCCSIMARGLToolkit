@@ -94,7 +94,7 @@ def sample_window_suddivision(pre_processed_data, number_of_samples):
 
 	return counters
 
-def save_csv(counters, pre_processed_data, output_file_path):
+def save_CSV(counters, pre_processed_data, output_file_path):
 	with open(output_file_path, mode='w') as file:
 	    writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 	    writer.writerow(['time', 'fl != 0'])
@@ -104,25 +104,21 @@ def save_csv(counters, pre_processed_data, output_file_path):
 
 def save_JSON(settings, timestamps, counters):
 
-	test_dict = { "label": "BCCSIMARGL Toolkit analysis",
-		"description:": "File parsed " + settings.csv,
-		"used time_window or sample_window:" : str(settings.time_window) + " " + str(settings.sample_window), 
-		"data": { 
-			"time instant [s]": timestamps,
+	test_dict = { "TOOL": "BCCSIMARGL Toolkit",
+		"Analysis": "Number of bins different from zero"
+		"File parsed": settings.csv,
+		"Analysis Timestamp": str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
+		"Time window [s]" : str(settings.time_window),
+		"Sample window [samples]": str(settings.sample_window),
+		"Field" : "Flow Label", 
+		"Data": { 
+			"timestamp [s]": timestamps,
 			"number of bins != 0": counters
-		},
-		"sources": [ { 
-			"markers": [ { 
-				"tool": "BCCSIMARGL Toolkit",
-				"timestamp": str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
-			} ]
-		 } ]
+		}
 	 }
 
 	with open(settings.output_file, 'w') as json_file:
 		json.dump(test_dict, json_file)
-
-
 
 
 def tmp_plot(pre_processed_data, counters):
@@ -164,7 +160,7 @@ if settings.time_window:
 elif settings.sample_window:
  	counters = sample_window_suddivision(pre_processed_data, settings.sample_window)
 #skip the first values
-#save_csv(counters[1:], pre_processed_data[1:], settings.output_file)
+#save_CSV(counters[1:], pre_processed_data[1:], settings.output_file)
 save_JSON(settings, pre_processed_data["time"][1:].to_list(), counters[1:])
 #tmp_plot(pre_processed_data[1:], counters[1:])
 
