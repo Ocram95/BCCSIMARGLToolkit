@@ -105,7 +105,7 @@ def save_CSV(counters, pre_processed_data, output_file_path):
 def save_JSON(settings, timestamps, counters):
 
 	test_dict = { "TOOL": "BCCSIMARGL Toolkit",
-		"Analysis": "Number of bins different from zero"
+		"Analysis": "Number of bins different from zero",
 		"File parsed": settings.csv,
 		"Analysis Timestamp": str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
 		"Time window [s]" : str(settings.time_window),
