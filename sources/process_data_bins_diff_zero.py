@@ -116,7 +116,7 @@ def save_JSON(settings, timestamps, counters):
 		"Analysis Timestamp": str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
 		"Time window [s]" : str(settings.time_window),
 		"Sample window [samples]": str(settings.sample_window),
-		"Field" : "Flow Label", 
+		"Field" : field, 
 		"Data": { 
 			"timestamp [s]": timestamps,
 			"number of bins != 0": counters
