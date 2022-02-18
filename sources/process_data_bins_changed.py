@@ -31,26 +31,33 @@ def tmp_plot(data):
 	plt.show()
 
 def save_CSV(data, output_file_path):
-	with open(output_file_path, mode='w') as file:
+	with open(output_file_path + ".csv", mode='w') as file:
 	    writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 	    writer.writerow(['time', 'no. of bins changed'])
 	    for x in range(len(data["time"].values)):
 	        writer.writerow([str(data["time"].values[x]), str(data['DIFF'][x])])
 
 def save_JSON(settings, data):
+	field = "N/A"
+	if "fl" in settings.csv:
+		field = "Flow Label"
+	elif "tc" in settings.csv:
+		field = "Traffic Class"
+	elif "hl" in settings.csv:
+		field = "Hop Limit"
 
 	test_dict = { "TOOL": "BCCSIMARGL Toolkit",
 		"Analysis": "Number of changed bins",
 		"File parsed": settings.csv,
 		"Analysis Timestamp": str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
-		"Field" : "Flow Label", 
+		"Field" : field, 
 		"Data": { 
 			"timestamp [s]": data["time"].to_list(),
 			"number of changed bins": data["DIFF"].to_list()
 		}
 	 }
 
-	with open(settings.output_file, 'w') as json_file:
+	with open(settings.output_file + ".json", 'w') as json_file:
 		json.dump(test_dict, json_file)
 
 

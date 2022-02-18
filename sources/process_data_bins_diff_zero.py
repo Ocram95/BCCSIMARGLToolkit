@@ -95,7 +95,7 @@ def sample_window_suddivision(pre_processed_data, number_of_samples):
 	return counters
 
 def save_CSV(counters, pre_processed_data, output_file_path):
-	with open(output_file_path, mode='w') as file:
+	with open(output_file_path + ".csv", mode='w') as file:
 	    writer = csv.writer(file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 	    writer.writerow(['time', 'fl != 0'])
 	    for x in range(len(counters)):
@@ -103,7 +103,13 @@ def save_CSV(counters, pre_processed_data, output_file_path):
 
 
 def save_JSON(settings, timestamps, counters):
-
+	field = "N/A"
+	if "fl" in settings.csv:
+		field = "Flow Label"
+	elif "tc" in settings.csv:
+		field = "Traffic Class"
+	elif "hl" in settings.csv:
+		field = "Hop Limit"
 	test_dict = { "TOOL": "BCCSIMARGL Toolkit",
 		"Analysis": "Number of bins different from zero",
 		"File parsed": settings.csv,
@@ -117,7 +123,7 @@ def save_JSON(settings, timestamps, counters):
 		}
 	 }
 
-	with open(settings.output_file, 'w') as json_file:
+	with open(settings.output_file + ".json", 'w') as json_file:
 		json.dump(test_dict, json_file)
 
 

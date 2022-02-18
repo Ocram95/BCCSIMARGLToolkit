@@ -7,13 +7,7 @@ import optparse
 
 def process_command_line(argv):
 	parser = optparse.OptionParser()
-	parser.add_option(
-		'-r',
-		'--csv',
-		help='Specify the eBPF csv to read.',
-		action='store',
-		type='string',
-		dest='csv')
+	parser.add_option('-r', '--csv', help='Specify the eBPF csv to read.', action='store', type='string', dest='csv')
 
 	settings, args = parser.parse_args(argv)
 		
